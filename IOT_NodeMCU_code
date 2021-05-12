@@ -1,0 +1,72 @@
+#include <SPI.h>
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+
+char auth[] = "mONtwqUj_RLi_-_LeX_dXEi-ZsG3o61z"; //Enter the Auth code which was send by Blink
+
+char ssid[] = "Abeyy Saale";  //Enter your WIFI Name
+char pass[] = "realmex6";  //Enter your WIFI Password
+WidgetLCD lcd(V2);
+
+#define buzzerPin 16
+
+BlynkTimer timer;
+int gasSensor;
+void sendSensor()
+{
+  gasSensor=analogRead(A0);
+  Serial.println(gasSensor);
+ 
+  if(gasSensor>=700)
+  {
+    digitalWrite(14,LOW);
+    digitalWrite(13,HIGH);
+     lcd.print(0, 2, "Value: ");
+     delay(1000);
+     lcd.print(0, 3,gasSensor);
+     delay(1000);
+     lcd.print(0, 4,"Gas detected");
+     delay(1000);
+     tone(buzzerPin,800,40);
+     delay(1000);
+     noTone(buzzerPin);
+   
+  }
+ 
+  if(gasSensor<700)
+  {
+      digitalWrite(14,HIGH);
+      digitalWrite(13,LOW);
+      lcd.print(0, 2,"Value: ");
+      delay(1000);
+      lcd.print(0, 3,gasSensor);
+      delay(1000);
+      lcd.print(0, 4,"No gas");
+      delay(1000);
+     
+  }
+
+  Blynk.virtualWrite(V1, gasSensor);
+}
+
+void setup()
+{
+  Serial.begin(115200); // See the connection status in Serial Monitor
+  Blynk.begin(auth, ssid, pass);
+
+  pinMode(13,OUTPUT);
+  pinMode(14,OUTPUT);
+  pinMode(buzzerPin,OUTPUT);
+
+ 
+  timer.setInterval(1000L, sendSensor);
+}
+
+void loop()
+{
+  Blynk.run(); // Initiates Blynk
+  timer.run(); // Initiates SimpleTimer
+
+ 
+ 
+}
