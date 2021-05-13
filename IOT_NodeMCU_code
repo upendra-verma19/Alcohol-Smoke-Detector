@@ -4,7 +4,7 @@
 
 char auth[] = "mONtwqUj_RLi_-_LeX_dXEi-ZsG3o61z"; //Enter the Auth code which was send by Blink
 
-char ssid[] = "Abeyy Saale";  //Enter your WIFI Name
+char ssid[] = "ZZZZZ";  //Enter your WIFI Name
 char pass[] = "realmex6";  //Enter your WIFI Password
 WidgetLCD lcd(V2);
 
@@ -25,7 +25,7 @@ void sendSensor()
      delay(1000);
      lcd.print(0, 3,gasSensor);
      delay(1000);
-     lcd.print(0, 4,"Gas detected");
+     lcd.print(0, 4,"Alcohol/Gas detected");
      delay(1000);
      tone(buzzerPin,800,40);
      delay(1000);
@@ -41,7 +41,7 @@ void sendSensor()
       delay(1000);
       lcd.print(0, 3,gasSensor);
       delay(1000);
-      lcd.print(0, 4,"No gas");
+      lcd.print(0, 4,"No Alcohol/gas");
       delay(1000);
      
   }
